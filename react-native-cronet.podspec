@@ -7,19 +7,20 @@ Pod::Spec.new do |s|
   s.version      = package["version"]
   s.summary      = package["description"]
   s.description  = <<-DESC
-                  react-native-cronet
+Cronet is the networking stack of Chromium put into a library for use on mobile. 
+This is the same networking stack that is used in the Chrome browser by over a billion people. 
+It offers an easy-to-use, high performance, standards-compliant, and secure way to perform HTTP requests.
                    DESC
   s.homepage     = "https://github.com/akshetpandey/react-native-cronet"
   s.license      = "MIT"
-  # s.license    = { :type => "MIT", :file => "FILE_LICENSE" }
   s.authors      = { "Akshet Pandey" => "github@akshetpandey.com" }
-  s.platform     = :ios, "7.0"
+  s.platform     = :ios, "9.0"
   s.source       = { :git => "https://github.com/akshetpandey/react-native-cronet.git", :tag => "#{s.version}" }
 
-  s.source_files = "ios/**/*.{h,m,swift}"
+  s.source_files = "ios/**/*.{h,m,mm,swift}"
   s.requires_arc = true
 
   s.dependency "React"
-  # s.dependency "..."
+  s.dependency "Cronet", '78.0.3888.patch.0.pre'
 end
 

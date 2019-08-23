@@ -1,8 +1,8 @@
 {
   "name": "react-native-cronet",
   "title": "React Native Cronet",
-  "version": "1.0.0",
-  "description": "TODO",
+  "version": "0.1.0",
+  "description": "Cronet is the networking stack of Chromium put into a library for use on mobile. This module allows you to use the Cronet stack for your react native apps.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

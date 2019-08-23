@@ -1,5 +1,6 @@
 PODS:
   - boost-for-react-native (1.63.0)
+  - Cronet (78.0.3888.patch.0.pre)
   - DoubleConversion (1.1.6)
   - Folly (2018.10.22.00):
     - boost-for-react-native
@@ -24,6 +25,8 @@ PODS:
     - React-RCTText (= 0.60.5)
     - React-RCTVibration (= 0.60.5)
     - React-RCTWebSocket (= 0.60.5)
+  - React-ART (0.60.5):
+    - React-Core (= 0.60.5)
   - React-Core (0.60.5):
     - Folly (= 2018.10.22.00)
     - React-cxxreact (= 0.60.5)
@@ -56,6 +59,9 @@ PODS:
     - React-cxxreact (= 0.60.5)
     - React-jsi (= 0.60.5)
   - React-jsinspector (0.60.5)
+  - react-native-cronet (0.1.0):
+    - Cronet (= 78.0.3888.patch.0.pre)
+    - React
   - React-RCTActionSheet (0.60.5):
     - React-Core (= 0.60.5)
   - React-RCTAnimation (0.60.5):
@@ -84,14 +90,16 @@ PODS:
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
-  - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
-  - React (from `../node_modules/react-native/`)
+  - glog (from `../node_modules/react-native/third-party-podspecs/GLog.podspec`)
+  - React (from `../node_modules/react-native`)
+  - React-ART (from `../node_modules/react-native/Libraries/ART`)
   - React-Core (from `../node_modules/react-native/React`)
   - React-cxxreact (from `../node_modules/react-native/ReactCommon/cxxreact`)
   - React-DevSupport (from `../node_modules/react-native/React`)
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-cronet (from `../../react-native-cronet.podspec`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -102,11 +110,12 @@ DEPENDENCIES:
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-RCTWebSocket (from `../node_modules/react-native/Libraries/WebSocket`)
-  - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
+  - yoga (from `../node_modules/react-native/ReactCommon/yoga/yoga.podspec`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - boost-for-react-native
+    - Cronet
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -114,9 +123,11 @@ EXTERNAL SOURCES:
   Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
-    :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+    :podspec: "../node_modules/react-native/third-party-podspecs/GLog.podspec"
   React:
-    :path: "../node_modules/react-native/"
+    :path: "../node_modules/react-native"
+  React-ART:
+    :path: "../node_modules/react-native/Libraries/ART"
   React-Core:
     :path: "../node_modules/react-native/React"
   React-cxxreact:
@@ -129,6 +140,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-cronet:
+    :path: "../../react-native-cronet.podspec"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -150,20 +163,23 @@ EXTERNAL SOURCES:
   React-RCTWebSocket:
     :path: "../node_modules/react-native/Libraries/WebSocket"
   yoga:
-    :path: "../node_modules/react-native/ReactCommon/yoga"
+    :path: "../node_modules/react-native/ReactCommon/yoga/yoga.podspec"
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  Cronet: d1f2bff35f7cfd548c327dcf76732ddae4e78e69
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
   React: 53c53c4d99097af47cf60594b8706b4e3321e722
+  React-ART: 662252e1a2f87f7d4e56150403040b4cd725c0f9
   React-Core: ba421f6b4f4cbe2fb17c0b6fc675f87622e78a64
   React-cxxreact: 8384287780c4999351ad9b6e7a149d9ed10a2395
   React-DevSupport: 197fb409737cff2c4f9986e77c220d7452cb9f9f
   React-jsi: 4d8c9efb6312a9725b18d6fc818ffc103f60fec2
   React-jsiexecutor: 90ad2f9db09513fc763bc757fdc3c4ff8bde2a30
   React-jsinspector: e08662d1bf5b129a3d556eb9ea343a3f40353ae4
+  react-native-cronet: af50301b1e0a1bf193d06788bbd4b626b2c90df8
   React-RCTActionSheet: b0f1ea83f4bf75fb966eae9bfc47b78c8d3efd90
   React-RCTAnimation: 359ba1b5690b1e87cc173558a78e82d35919333e
   React-RCTBlob: 5e2b55f76e9a1c7ae52b826923502ddc3238df24
@@ -176,6 +192,6 @@ SPEC CHECKSUMS:
   React-RCTWebSocket: cd932a16b7214898b6b7f788c8bddb3637246ac4
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
-PODFILE CHECKSUM: 54eb0fd240f6134c7b39890d98d74d8d96f35989
+PODFILE CHECKSUM: b1eeb2fd7a1eddf22244d58f899be51823da5d71
 
 COCOAPODS: 1.7.5

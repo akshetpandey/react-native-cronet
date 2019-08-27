@@ -28,6 +28,6 @@
   },
   "devDependencies": {
     "react": "^16.5.0",
-    "react-native": "^0.59.4"
+    "react-native": "github:facebook/react-native#master"
   }
 }

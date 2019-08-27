@@ -1,12 +1,13 @@
 # react-native-cronet
 
-[Cronet](https://developer.android.com/guide/topics/connectivity/cronet) is the [networking stack of Chromium](https://chromium.googlesource.com/chromium/src/+/master/components/cronet) put into a library for use on mobile. 
+[Cronet](https://chromium.googlesource.com/chromium/src/+/master/components/cronet) is the [networking stack of Chromium](https://chromium.googlesource.com/chromium/src/+/master/net/docs/life-of-a-url-request.md) put into a library for use on mobile. 
 This is the same networking stack that is used in the Chrome browser by over a billion people. 
 It offers an easy-to-use, high performance, standards-compliant, and secure way to perform HTTP requests. 
 Cronet has support for both Android and iOS.
 
 
-This module allows you to use the Cronet stack for your react native apps. All you have to do is add this package to your project using yarn or npm.
+This module allows you to use the Cronet stack for your react native apps. 
+All you have to do is add this package to your project using yarn or npm.
 
 ## Getting started
 

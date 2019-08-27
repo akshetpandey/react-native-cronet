@@ -51,6 +51,7 @@ repositories {
 
 dependencies {
     implementation "com.facebook.react:react-native:${safeExtGet('reactnativeVersion', '+')}"
+    implementation 'com.google.android.gms:play-services-cronet:17.0.0'
 }
 
 def configureReactNativePom(def pom) {

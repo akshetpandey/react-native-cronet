@@ -9,29 +9,58 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import RnCronet from 'react-native-cronet';
+import { StyleSheet, Text, View, Image } from 'react-native';
 
-export default class App extends Component<{}> {
+export default class App extends Component {
   state = {
-    status: 'starting',
-    message: '--'
+    google: 0,
+    facebook: 0,
+    github: 0,
+    apiResponse: "test"
   };
+
   componentDidMount() {
-    RnCronet.sampleMethod('Testing', 123, (message) => {
-      this.setState({
-        status: 'native callback received',
-        message
-      });
-    });
+    fetch("https://www.google.com").then(response => {
+      this.setState({google: response.status})
+    }).catch(e => {
+      console.log(e)
+    })
+
+    fetch("https://www.facebook.com").then(response => {
+      this.setState({facebook: response.status})
+    }).catch(e => {
+      console.log(e)
+    })
+
+    fetch("https://www.github.com").then(response => {
+      this.setState({github: response.status})
+    }).catch(e => {
+      console.log(e)
+    })
+
+    fetch('https://jsonplaceholder.typicode.com/todos/1')
+      .then(response => response.text())
+      .then(text => {
+        this.setState({apiResponse: text})
+      }).catch(e => {
+        console.log(e)
+      })
   }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>☆RnCronet example☆</Text>
-        <Text style={styles.instructions}>STATUS: {this.state.status}</Text>
-        <Text style={styles.welcome}>☆NATIVE CALLBACK MESSAGE☆</Text>
-        <Text style={styles.instructions}>{this.state.message}</Text>
+        <Text style={styles.welcome}>☆RNCronet example☆</Text>
+        <Text style={styles.instructions}>Google: {this.state.google}</Text>
+        <Text style={styles.instructions}>Facebook: {this.state.facebook}</Text>
+        <Text style={styles.instructions}>Github: {this.state.github}</Text>
+        <Text style={styles.instructions}>Api Response: {this.state.apiResponse}</Text>
+        <Image           
+          style={{width: 200, height: 200}}
+          source={{uri: "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"}} />
+        <Image           
+          style={{width: 200, height: 200}}
+          source={{uri: "https://res.cloudinary.com/demo/image/upload/fl_progressive/sample.jpg"}} />
       </View>
     );
   }

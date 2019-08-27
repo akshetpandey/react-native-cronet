@@ -189,7 +189,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    implementation 'com.google.android.gms:play-services-cronet:17.0.0'
+
+    implementation project(':ReactAndroid') // From node_modules
+    implementation project(':RNCronet')
 
     if (enableHermes) {
       def hermesPath = "../../node_modules/hermesvm/android/";

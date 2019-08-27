@@ -12,7 +12,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void (^CronetBuilderBlock)(void);
+
 @interface RCTCronetHTTPRequestHandler : NSObject <RCTURLRequestHandler, RCTInvalidating>
+
++ (void)setCustomCronetEngineBuilder:(CronetBuilderBlock)block;
 
 @end
 

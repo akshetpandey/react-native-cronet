@@ -23,6 +23,8 @@
   std::mutex _mutex;
 }
 
+static CronetBuilderBlock customCronetEngineBuilderBlock;
+
 @synthesize bridge = _bridge;
 @synthesize methodQueue = _methodQueue;
 
@@ -32,22 +34,26 @@ RCT_EXPORT_MODULE()
   return YES;
 }
 
++ (void)setCustomCronetEngineBuilder:(CronetBuilderBlock)block {
+    customCronetEngineBuilderBlock = [block copy];
+}
+
 - (instancetype)init {
   if (self = [super init]) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-      [Cronet setHttp2Enabled:YES];
-      [Cronet setQuicEnabled:YES];
-      [Cronet setBrotliEnabled:YES];
-      [Cronet setAcceptLanguages:@"en-US,en"];
+        if (customCronetEngineBuilderBlock) {
+            customCronetEngineBuilderBlock();
+        } else {
+            [Cronet setHttp2Enabled:YES];
+            [Cronet setQuicEnabled:YES];
+            [Cronet setBrotliEnabled:YES];
+            [Cronet setHttpCacheType:CRNHttpCacheTypeDisk];
 
-      [Cronet setMetricsEnabled:YES];
-
-      [Cronet start];
-
-#if RNCRONET_REGISTER_DEFAULT_HANDLERS
-      [Cronet registerHttpProtocolHandler];
-#endif
+            [Cronet start];
+            
+            [Cronet registerHttpProtocolHandler];
+        }
     });
   }
   return self;

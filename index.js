@@ -1,5 +1,3 @@
-import { NativeModules } from 'react-native';
+console.warn("There is nothing to import from the react-native-cronet package")
 
-const { RnCronet } = NativeModules;
-
-export default RnCronet;
+export default {}

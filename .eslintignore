@@ -1,0 +1,4 @@
+lib/
+scripts/
+babel.config.js
+example/node_modules

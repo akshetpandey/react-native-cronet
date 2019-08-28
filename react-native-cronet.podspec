@@ -7,8 +7,8 @@ Pod::Spec.new do |s|
   s.version      = package["version"]
   s.summary      = package["description"]
   s.description  = <<-DESC
-Cronet is the networking stack of Chromium put into a library for use on mobile. 
-This is the same networking stack that is used in the Chrome browser by over a billion people. 
+Cronet is the networking stack of Chromium put into a library for use on mobile.
+This is the same networking stack that is used in the Chrome browser by over a billion people.
 It offers an easy-to-use, high performance, standards-compliant, and secure way to perform HTTP requests.
                    DESC
   s.homepage     = "https://github.com/akshetpandey/react-native-cronet"

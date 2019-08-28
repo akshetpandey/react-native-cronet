@@ -41,6 +41,7 @@ public class MainActivity extends ReactActivity {
                     })
                     .setStoragePath(cacheDir.getAbsolutePath())
                     .enableHttpCache(CronetEngine.Builder.HTTP_CACHE_DISK, 10 * 1024 * 1024)
+                    .addQuicHint("www.google.com", 443, 443)
                     .build();
             URL.setURLStreamHandlerFactory(cronetEngine.createURLStreamHandlerFactory());
 

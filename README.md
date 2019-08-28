@@ -9,6 +9,12 @@ Cronet has support for both Android and iOS.
 This module allows you to use the Cronet stack for your react native apps. 
 All you have to do is add this package to your project using yarn or npm.
 
+## NOTE
+
+For iOS, you will have to disable bitcode for your target.
+
+In XCode, in the project navigator, select your project. `Build Settings` ➜ `Enable Bitcode` ➜ `No`
+
 ## Getting started
 
 Using npm:

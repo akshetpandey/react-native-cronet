@@ -56,12 +56,36 @@ yarn add react-native-cronet
 
 ## Usage
 
-You don't have to do anything else. Cronet is used automatically for all react-native network request.
+You don't have to do anything else for iOS. Cronet is used automatically for all react-native network request.
+For Android, in your `MainApplication.java`, you will have to change how RN initializes `FrescoModule` internally by doing this:
+
+```java
+import com.akshetpandey.rncronet.RNCronetFrescoImagePipelineConfig;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.facebook.react.shell.MainPackageConfig;
+
+public class MainApplication extends Application implements ReactApplication {
+
+  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+    //...
+    @Override
+    protected List<ReactPackage> getPackages() {
+      ImagePipelineConfig pipelineConfig = RNCronetFrescoImagePipelineConfig.build(getApplicationContext());
+      MainPackageConfig config = new MainPackageConfig.Builder().setFrescoConfig(pipelineConfig).build();
+      List<ReactPackage> packages = new PackageList(this, config).getPackages();
+      // Packages that cannot be autolinked yet can be added manually here, for example:
+      // packages.add(new RNCronetNetworkingPackage());
+      return packages;
+    }
+    //...
+  }
+}
+```
 
 ## Advanced Usage
 
-Although the library is capable of automatically configuring itself, you can also initialize the cronet engine based on your usecase.
-One reason to do this would be to provide quic hints for your domain that you know supports quic, or to customize cache size and type.
+Although the library is capable of automatically configuring itself, you can also initialize the cronet engine based on your use case.
+One reason to do this would be to provide QUIC hints for your domain that you know supports QUIC, or to customize cache size and type.
 
 Nothing needs to be done on the JS side.
 

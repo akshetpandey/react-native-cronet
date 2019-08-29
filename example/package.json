@@ -6,7 +6,9 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "postinstall": "node ../scripts/examples_postinstall.js"
+    "postinstall": "npm-run-all postinstall:*",
+    "postinstall:clean-cronet": "node ../scripts/examples_postinstall.js",
+    "postinstall:patch-package": "patch-package"
   },
   "dependencies": {
     "react": "16.9.0",
@@ -21,6 +23,9 @@
     "eslint": "^6.2.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.0",
+    "npm-run-all": "^4.1.5",
+    "patch-package": "^6.1.2",
+    "postinstall-postinstall": "^2.0.0",
     "react-test-renderer": "16.9.0"
   },
   "jest": {

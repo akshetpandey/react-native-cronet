@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.akshetpandey.rncronet.RNCronetNetworkingModule;
 import com.facebook.react.ReactActivity;
-import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.soloader.SoLoader;
 
 import org.chromium.net.CronetEngine;

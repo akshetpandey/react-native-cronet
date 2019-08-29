@@ -13,8 +13,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import org.chromium.net.CronetEngine;
+import org.chromium.net.UploadDataProviders;
+import org.chromium.net.UrlRequest;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.security.Provider;
 import java.security.Security;
@@ -22,7 +25,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okio.Buffer;
 
 public class RNCronetNetworkingModule extends ReactContextBaseJavaModule {
 
@@ -39,7 +47,7 @@ public class RNCronetNetworkingModule extends ReactContextBaseJavaModule {
           return sharedClient;
         }
 
-        OkHttpClient.Builder client =
+        OkHttpClient.Builder clientBuilder =
                 new OkHttpClient.Builder()
                         .connectTimeout(0, TimeUnit.MILLISECONDS)
                         .readTimeout(0, TimeUnit.MILLISECONDS)
@@ -50,9 +58,10 @@ public class RNCronetNetworkingModule extends ReactContextBaseJavaModule {
         try {
           Class ConscryptProvider = Class.forName("org.conscrypt.OpenSSLProvider");
           Security.insertProviderAt((Provider) ConscryptProvider.newInstance(), 1);
-          sharedClient = client.build();
+
+          sharedClient = clientBuilder.build();
         } catch (Exception e) {
-          sharedClient = OkHttpClientProvider.enableTls12OnPreLollipop(client).build();
+          sharedClient = OkHttpClientProvider.enableTls12OnPreLollipop(clientBuilder).build();
         }
 
         return sharedClient;
@@ -84,10 +93,6 @@ public class RNCronetNetworkingModule extends ReactContextBaseJavaModule {
     return cronetEngine;
   }
 
-  public static ExecutorService executorService() {
-    return executorService;
-  }
-
   private static synchronized void initializeCronetEngine(ReactApplicationContext reactContext) {
     if (cronetEngine == null) {
       if (customCronetBuilder != null) {
@@ -113,6 +118,32 @@ public class RNCronetNetworkingModule extends ReactContextBaseJavaModule {
       }
     }
   }
+
+  static UrlRequest buildRequest(Request request, UrlRequest.Callback callback) throws IOException {
+    String url = request.url().toString();
+
+    UrlRequest.Builder requestBuilder = cronetEngine.newUrlRequestBuilder(url, callback, executorService);
+    requestBuilder.setHttpMethod(request.method());
+
+    Headers headers = request.headers();
+    for (int i = 0; i < headers.size(); i += 1) {
+      requestBuilder.addHeader(headers.name(i), headers.value(i));
+    }
+
+    RequestBody requestBody = request.body();
+    if (requestBody != null) {
+      MediaType contentType = requestBody.contentType();
+      if (contentType != null) {
+        requestBuilder.addHeader("Content-Type", contentType.toString());
+      }
+      Buffer buffer = new Buffer();
+      requestBody.writeTo(buffer);
+      requestBuilder.setUploadDataProvider(UploadDataProviders.create(buffer.readByteArray()), executorService);
+    }
+
+    return requestBuilder.build();
+  }
+
 
   @Override
   @NonNull

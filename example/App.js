@@ -12,6 +12,49 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 
 export default class App extends Component {
+  imageUrls = [
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8oeUYYsI1bna0kPb_B0bVyQH1ZKdusZyfTRoNwKcMOB8ffgAyBg',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVZpiZClGnYHJKZJ5vZYNJAuAryhSKzAcXE9hFj6e5-sSo0W03',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMaL_bwIbirU4Yx3KneeiqTPeVyKztRfKJROVYK4LttLfDb3wYnw',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2jbMPqmNkAJX1Drpe31jPiYnUyHcaE6Lu28Xwz0bsbns_C7oLoQ',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj3XZ8aB-fmT80WsFnKFo0xk9Mc_0pqs02CAd5Ux29ki7FFYfqwQ',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6o9gQUhGxxKKuQBleye_ibGBuV-mo1duupUN8Zn3XC34h0Ugd7A',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSERuXJX0ANc3UfC40nnONxSNvCv3EKRtYC0G7wKjbvpNzh_EBDvw',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp7LiLz-xPxjN3jPqS0qQEgQHQ-10aEJwyQKb9n31dx4Ywg_e8',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv73N30PMip5sGzboasjF0F4WdTqjvupfP_Uiv8KTLNFC3XG1E',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgG9RqlI1mu9wTzYwhuyf608zbQFdQOc5aPQH8IXVbzpkJSA7c',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSB8F3L36wOsGEU7ua3_uef0KucLgV96n4HK7UFKunC211laFWSkw',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4MSNr9P29sqLb80wUNPW6PoDiSqp0Dwth9e-JX3lgmeqbTLI9SQ',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb8fiuVUaHEoLMzJjXEHlYUkjLyyP-akpg0IIOQXrQsSuA0iLYcA',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStpKkrvGte8EgZ6Izosi3SOkLfmSBcu60-PuvA3_A3eUMXrMU1',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBH8NzPx_9GzIThDPjkiBRN4OcCtfBclueMYgb2bTNzeY4KHgjDA',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUljZ-_Lj1MJybD_hlcZ3EX17U-FhB10eG3S74h0Ide3zB86FG1A',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzhnYvffH6b9n4JUIUQBbXJOqrhIYWe0fyOGCyynzAaz2uxdoIbA',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3e6WHIK-QQf9d9W2gvlnzKnKGVhhOEMfeI1XZpvigm_tEIye59A',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThqVqF2J2cH9jk5sJjvFpwNhv0IWfTM2_O7AXkya69g1N1UXdmZw',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpLO1XwS7OUrAHzQjROQltOCnrst8lGI9s95hBnJaEqXct_L4n',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnj79hGArvvKgp5nkDA1KaH8aH6KB5urIb70PuhQMvM4CUS2kK',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV5DnL_6GJso3GCKUKKn5G4NzHl5i95reCamjDMDnRHbwhLBw-',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrq_H-f0MFyBR03lu38ghVxSXi-xxHHhhu3DtbePJZ2bp15UP2',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmpLOGOIrATovtsprYJWTPZlS5tAsM9ujafAiETp-Gnb0Obpn0',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQt8qf9dr4js51S1jKDR4eU_sw94nQnWo6wc-Qg4hlOpmzWk8L9',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdg-3vrifQILpxjwuytFnp5xtVPsNhQzqGh5H69yRsJlEGaiUU',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9_JWAFA_Q8kQitjXBwRtNUw5xOSKC_SF_rbZOTriNOMncfrM0Ww',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeJxCCcxTQ3cMftoy1RGZAhK94w-rWF0xfGs61ZIxan4-thgfd',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh7RRsMGQNm0ZzsNg7f-DTY7hAV9GLcUTRcPbWWwzexYxEgrN-bQ',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM4Y_m6SbMztUGALvkh5HQ5lMzuxVPY4Bu6YGmsL8PrV9i8_gDIw',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ64fC2teA56dAVqvnWjAoGQswS8wSYrIOrvoPUiQUi-AOXM7SK',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlUiyrmhTXFppqk4aYzqTOU9nimCQsYibukwAV8rstsDkAVQT-mA',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT4JggLLWa1MLkk1mDql-7WQYIrhsqb1_YKCaEd0Vh8efx7aMe',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC0JN9rbNcndXEW6kGgzy8W7yYjO6FDhsPMCj5kNuPhGeYC-_FsQ',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxd4yBDko4CujLuHVNN-jjjCPnuPApiqNJhDWtkdETE3klTA_QKA',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCMxRpOMIOkadfNytGYg52y0hNN9Jkp2d5r2OAt-jK1X5b-06Tug',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThRpoCD3o11kYsQEB3Te21wjsSpSG71BvDWNOM82_xnb9vpbW5vw',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPZus9W1U2loB-ikZmcyG7xAwtIeEUxGGHkCRrPcEeF_Ou3-5j',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ130whIfPajAnFj117D7oBkljxVcrVL4g9mwBwHmcDFXisFrGs',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjLK_-WuC1KOJU43cLECOt9KcrNfmjbbNAr8xYB65_mTsoRbdH',
+  ];
+
   state = {
     google: 0,
     facebook: 0,
@@ -20,9 +63,10 @@ export default class App extends Component {
   };
 
   componentDidMount() {
+    const time = new Date().getTime();
     fetch('https://www.google.com')
       .then(response => {
-        this.setState({google: response.status});
+        this.setState({google: new Date().getTime() - time});
       })
       .catch(e => {
         console.log(e);
@@ -30,7 +74,7 @@ export default class App extends Component {
 
     fetch('https://www.facebook.com')
       .then(response => {
-        this.setState({facebook: response.status});
+        this.setState({facebook: new Date().getTime() - time});
       })
       .catch(e => {
         console.log(e);
@@ -38,16 +82,7 @@ export default class App extends Component {
 
     fetch('https://www.github.com')
       .then(response => {
-        this.setState({github: response.status});
-      })
-      .catch(e => {
-        console.log(e);
-      });
-
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
-      .then(response => response.text())
-      .then(text => {
-        this.setState({apiResponse: text});
+        this.setState({github: new Date().getTime() - time});
       })
       .catch(e => {
         console.log(e);
@@ -55,29 +90,24 @@ export default class App extends Component {
   }
 
   render() {
+    const imageArray = [];
+    for (let i = 0; i < this.imageUrls.length; i += 1) {
+      imageArray.push(
+        <Image
+          key={i}
+          style={styles.image}
+          source={{uri: this.imageUrls[i]}}
+        />,
+      );
+    }
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>☆RNCronet example☆</Text>
-        <Text style={styles.instructions}>Google: {this.state.google}</Text>
-        <Text style={styles.instructions}>Facebook: {this.state.facebook}</Text>
-        <Text style={styles.instructions}>Github: {this.state.github}</Text>
+        <Text style={styles.welcome}>RNCronet Test</Text>
         <Text style={styles.instructions}>
-          Api Response: {this.state.apiResponse}
+          G: {this.state.google}ms F: {this.state.facebook}ms GT:{' '}
+          {this.state.github}ms
         </Text>
-        <Image
-          style={styles.image}
-          source={{
-            uri:
-              'https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png',
-          }}
-        />
-        <Image
-          style={styles.image}
-          source={{
-            uri:
-              'https://res.cloudinary.com/demo/image/upload/fl_progressive/sample.jpg',
-          }}
-        />
+        <View style={styles.imageContainer}>{imageArray}</View>
       </View>
     );
   }
@@ -100,8 +130,18 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  imageContainer: {
+    width: '100%',
+    flex: 1,
+    textAlign: 'center',
+    alignContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
   image: {
-    width: 200,
-    height: 200,
+    width: 75,
+    height: 75,
+    margin: 1,
   },
 });

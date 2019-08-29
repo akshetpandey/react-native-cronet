@@ -23,7 +23,7 @@
   std::mutex _mutex;
 }
 
-static CronetBuilderBlock customCronetEngineBuilderBlock;
+static CustomCronetBuilder customCronetEngineBuilderBlock;
 
 @synthesize bridge = _bridge;
 @synthesize methodQueue = _methodQueue;
@@ -34,7 +34,7 @@ RCT_EXPORT_MODULE()
   return YES;
 }
 
-+ (void)setCustomCronetEngineBuilder:(CronetBuilderBlock)block {
++ (void)setCustomCronetBuilder:(CustomCronetBuilder)block {
     customCronetEngineBuilderBlock = [block copy];
 }
 

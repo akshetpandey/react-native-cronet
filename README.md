@@ -79,7 +79,7 @@ iOS documentation for the cronet library initialization is sparse, but you can l
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // ...
 
-  [RCTCronetHTTPRequestHandler setCustomCronetEngineBuilder:^{
+  [RCTCronetHTTPRequestHandler setCustomCronetBuilder:^{
     [Cronet setHttp2Enabled:YES];
     [Cronet setQuicEnabled:YES];
     [Cronet setBrotliEnabled:YES];

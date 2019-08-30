@@ -62,7 +62,7 @@ bundles/
 android/.externalNativeBuild/
 android/build
 babel.config.js
-docs/video_preview.gif
+docs/*
 example
 react-native-cronet-*.tgz
 scripts/examples_postinstall.js

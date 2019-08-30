@@ -9,7 +9,7 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, Button} from 'react-native';
 
 export default class App extends Component {
   imageUrls = [
@@ -53,20 +53,31 @@ export default class App extends Component {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPZus9W1U2loB-ikZmcyG7xAwtIeEUxGGHkCRrPcEeF_Ou3-5j',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ130whIfPajAnFj117D7oBkljxVcrVL4g9mwBwHmcDFXisFrGs',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjLK_-WuC1KOJU43cLECOt9KcrNfmjbbNAr8xYB65_mTsoRbdH',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6CgVGg5OjY7d64jvpXLs4MsWpykLmzOa_I6ClH2zLvycZ5J2c4g',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvowRG4PoNwRWECBlAMljLxQlxFQPTQExHLkzGR-Kg_n4pos-I3Q',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuyhDNz_ucGzC60IA5a6_mM4pKPYUHYL7sDKid5C-Jkyo0B6Ia',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFwFaTk5hkuQAO89Oy0P8Jk9GSLXpwb9b4vgO6WZ-d3iRNW3KE',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWA3IV-BW1OwolT3DMly8FkQ3VjtObHrBXb2L1srmR1nYt8utm',
   ];
 
   state = {
     google: 0,
+    googleHeaders: '',
     facebook: 0,
+    facebookHeaders: '',
     github: 0,
-    apiResponse: 'test',
+    githubHeaders: '',
+    startLoad: 0,
   };
 
-  componentDidMount() {
+  loadWebsites() {
     const time = new Date().getTime();
     fetch('https://www.google.com')
       .then(response => {
-        this.setState({google: new Date().getTime() - time});
+        this.setState({
+          google: new Date().getTime() - time,
+          googleHeaders: response.headers.get('alt-svc'),
+        });
       })
       .catch(e => {
         console.log(e);
@@ -74,7 +85,10 @@ export default class App extends Component {
 
     fetch('https://www.facebook.com')
       .then(response => {
-        this.setState({facebook: new Date().getTime() - time});
+        this.setState({
+          facebook: new Date().getTime() - time,
+          facebookHeaders: response.headers.get('alt-svc'),
+        });
       })
       .catch(e => {
         console.log(e);
@@ -82,7 +96,10 @@ export default class App extends Component {
 
     fetch('https://www.github.com')
       .then(response => {
-        this.setState({github: new Date().getTime() - time});
+        this.setState({
+          github: new Date().getTime() - time,
+          githubHeaders: response.headers.get('alt-svc'),
+        });
       })
       .catch(e => {
         console.log(e);
@@ -90,33 +107,62 @@ export default class App extends Component {
   }
 
   render() {
-    const imageArray = [];
-    for (let i = 0; i < this.imageUrls.length; i += 1) {
-      imageArray.push(
-        <Image
-          key={i}
-          style={styles.image}
-          source={{uri: this.imageUrls[i]}}
-        />,
+    if (!this.state.startLoad) {
+      return (
+        <View style={styles.container}>
+          <Button
+            title="Load Images"
+            onPress={() => this.setState({startLoad: 1})}
+          />
+          <Button
+            title="Load Websites"
+            onPress={() => {
+              this.loadWebsites();
+              this.setState({startLoad: 2});
+            }}
+          />
+        </View>
       );
     }
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>RNCronet Test</Text>
-        <Text style={styles.instructions}>
-          G: {this.state.google}ms F: {this.state.facebook}ms GT:{' '}
-          {this.state.github}ms
-        </Text>
-        <View style={styles.imageContainer}>{imageArray}</View>
-      </View>
-    );
+    if (this.state.startLoad === 1) {
+      const imageArray = [];
+      for (let i = 0; i < this.imageUrls.length; i += 1) {
+        imageArray.push(
+          <Image
+            key={i}
+            style={styles.image}
+            source={{uri: this.imageUrls[i]}}
+          />,
+        );
+      }
+      return <View style={styles.imageContainer}>{imageArray}</View>;
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.welcome}>RNCronet Test</Text>
+          <Text style={styles.instructions}>
+            Google: {this.state.google}ms{'\n'}
+            AltSvc: {JSON.stringify(this.state.googleHeaders, null, 1)}
+          </Text>
+          <Text style={styles.instructions}>
+            facebook: {this.state.facebook}ms{'\n'}
+            AltSvc: {JSON.stringify(this.state.facebookHeaders, null, 1)}
+          </Text>
+          <Text style={styles.instructions}>
+            Github:{this.state.github}ms{'\n'}
+            AltSvc: {JSON.stringify(this.state.githubHeaders, null, 1)}
+          </Text>
+        </View>
+      );
+    }
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    height: 500,
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
@@ -133,9 +179,9 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: '100%',
     flex: 1,
+    paddingLeft: 4,
+    paddingTop: 10,
     textAlign: 'center',
-    alignContent: 'flex-start',
-    alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
   },

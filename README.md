@@ -6,7 +6,9 @@ It offers an easy-to-use, high performance, standards-compliant, and secure way 
 Cronet has support for both Android and iOS.
 
 This module allows you to use the Cronet stack for your react native apps.
-All you have to do is add this package to your project using yarn or npm.
+Checkout default android vs cronet comparison when loading many images
+
+![Preview](docs/CronetComp.gif)
 
 ## NOTE
 

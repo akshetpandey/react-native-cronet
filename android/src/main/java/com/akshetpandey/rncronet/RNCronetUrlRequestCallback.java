@@ -13,7 +13,6 @@ import org.chromium.net.UrlResponseInfo;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.WritableByteChannel;
@@ -30,7 +29,6 @@ import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import okhttp3.internal.connection.Transmitter;
 
 class RNCronetUrlRequestCallback extends UrlRequest.Callback {
   private static final String TAG = "Callback";
@@ -39,6 +37,7 @@ class RNCronetUrlRequestCallback extends UrlRequest.Callback {
 
   private Request originalRequest;
   private Call mCall;
+  @Nullable
   private EventListener eventListener;
   @Nullable
   private Callback responseCallback;
@@ -68,25 +67,7 @@ class RNCronetUrlRequestCallback extends UrlRequest.Callback {
             .message("")
             .build();
     this.responseCallback = responseCallback;
-
-    if (eventListener != null) {
-      this.eventListener = eventListener;
-    } else {
-      try {
-        Field transmitterField = call.getClass().getDeclaredField("transmitter");
-        transmitterField.setAccessible(true);
-
-        Field eventListenerField = Transmitter.class.getDeclaredField("eventListener");
-        eventListenerField.setAccessible(true);
-
-        Transmitter transmitter = (Transmitter) transmitterField.get(mCall);
-        this.eventListener = (EventListener) eventListenerField.get(transmitter);
-      } catch (NoSuchFieldException e) {
-        Log.e(TAG, "Invalid Reflection. Library may need to be updated");
-      } catch (IllegalAccessException e) {
-        Log.e(TAG, "Invalid Reflection. Library may need to be updated");
-      }
-    }
+    this.eventListener = eventListener;
   }
 
   private static Protocol protocolFromNegotiatedProtocol(UrlResponseInfo responseInfo) {
@@ -167,8 +148,10 @@ class RNCronetUrlRequestCallback extends UrlRequest.Callback {
   public void onResponseStarted(UrlRequest request, UrlResponseInfo info) {
     mResponse = responseFromResponse(mResponse, info);
 
-    eventListener.responseHeadersEnd(mCall, mResponse);
-    eventListener.responseBodyStart(mCall);
+    if (eventListener != null) {
+      eventListener.responseHeadersEnd(mCall, mResponse);
+      eventListener.responseBodyStart(mCall);
+    }
 
     request.read(ByteBuffer.allocateDirect(32 * 1024));
   }
@@ -191,7 +174,9 @@ class RNCronetUrlRequestCallback extends UrlRequest.Callback {
 
   @Override
   public void onSucceeded(UrlRequest request, UrlResponseInfo info) {
-    eventListener.responseBodyEnd(mCall, info.getReceivedByteCount());
+    if (eventListener != null) {
+      eventListener.responseBodyEnd(mCall, info.getReceivedByteCount());
+    }
 
     String contentTypeString = mResponse.header("content-type");
     MediaType contentType = MediaType.parse(contentTypeString != null ? contentTypeString : "text/plain; charset=\"utf-8\"");
@@ -202,7 +187,9 @@ class RNCronetUrlRequestCallback extends UrlRequest.Callback {
 
     mResponseConditon.open();
 
-    eventListener.callEnd(mCall);
+    if (eventListener != null) {
+      eventListener.callEnd(mCall);
+    }
 
     if (responseCallback != null) {
       try {
@@ -218,7 +205,9 @@ class RNCronetUrlRequestCallback extends UrlRequest.Callback {
     IOException e = new IOException("Cronet Exception Occurred", error);
     mException = e;
     mResponseConditon.open();
-    eventListener.callFailed(mCall, e);
+    if (eventListener != null) {
+      eventListener.callFailed(mCall, e);
+    }
     if (responseCallback != null) {
       responseCallback.onFailure(mCall, e);
     }
@@ -227,6 +216,8 @@ class RNCronetUrlRequestCallback extends UrlRequest.Callback {
   @Override
   public void onCanceled(UrlRequest request, UrlResponseInfo info) {
     mResponseConditon.open();
-    eventListener.callEnd(mCall);
+    if (eventListener != null) {
+      eventListener.callEnd(mCall);
+    }
   }
 }

@@ -2,7 +2,7 @@
   "name": "react-native-cronet",
   "description": "Cronet is the networking stack of Chromium put into a library for use on mobile. This module allows you to use the Cronet stack for your react native apps.",
   "title": "React Native Cronet",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "index.js",
   "typings": "index.d.ts",
   "scripts": {

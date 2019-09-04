@@ -21,6 +21,6 @@ It offers an easy-to-use, high performance, standards-compliant, and secure way 
   s.requires_arc = true
 
   s.dependency "React"
-  s.dependency "Cronet", '78.0.3888.patch.0.pre'
+  s.dependency "Cronet"
 end
 

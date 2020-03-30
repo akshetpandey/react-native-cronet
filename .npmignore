@@ -69,3 +69,6 @@ scripts/examples_postinstall.js
 tsconfig.json
 yarn.lock
 CODE_OF_CONDUCT.md
+lib/
+android/README.md
+src/

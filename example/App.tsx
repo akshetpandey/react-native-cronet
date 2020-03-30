@@ -9,7 +9,48 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image, Button} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Button,
+  SafeAreaView,
+} from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    height: 500,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+  imageContainer: {
+    width: '100%',
+    flex: 1,
+    paddingLeft: 4,
+    paddingTop: 10,
+    textAlign: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  image: {
+    width: 75,
+    height: 75,
+    margin: 1,
+  },
+});
 
 export default class App extends Component {
   imageUrls = [
@@ -73,40 +114,42 @@ export default class App extends Component {
   loadWebsites() {
     const time = new Date().getTime();
     fetch('https://www.google.com')
-      .then(response => {
+      .then((response) => {
         this.setState({
           google: new Date().getTime() - time,
           googleHeaders: response.headers.get('alt-svc'),
         });
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
 
     fetch('https://www.facebook.com')
-      .then(response => {
+      .then((response) => {
         this.setState({
           facebook: new Date().getTime() - time,
           facebookHeaders: response.headers.get('alt-svc'),
         });
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
 
     fetch('https://www.github.com')
-      .then(response => {
+      .then((response) => {
         this.setState({
           github: new Date().getTime() - time,
           githubHeaders: response.headers.get('alt-svc'),
         });
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
   }
 
   render() {
+    const usingHermes = typeof HermesInternal === 'object' && HermesInternal !== null;
+
     if (!this.state.startLoad) {
       return (
         <View style={styles.container}>
@@ -121,9 +164,11 @@ export default class App extends Component {
               this.setState({startLoad: 2});
             }}
           />
+          <Text>Hermes: {usingHermes ? 'Yes' : 'NO'}</Text>
         </View>
       );
     }
+
     if (this.state.startLoad === 1) {
       const imageArray = [];
       for (let i = 0; i < this.imageUrls.length; i += 1) {
@@ -135,10 +180,15 @@ export default class App extends Component {
           />,
         );
       }
-      return <View style={styles.imageContainer}>{imageArray}</View>;
+      return (
+        <SafeAreaView style={styles.container}>
+          <View style={styles.imageContainer}>{imageArray}</View>
+          <Button title="Back" onPress={() => this.setState({startLoad: 0})} />
+        </SafeAreaView>
+      );
     } else {
       return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <Text style={styles.welcome}>RNCronet Test</Text>
           <Text style={styles.instructions}>
             Google: {this.state.google}ms{'\n'}
@@ -152,42 +202,9 @@ export default class App extends Component {
             Github:{this.state.github}ms{'\n'}
             AltSvc: {JSON.stringify(this.state.githubHeaders, null, 1)}
           </Text>
-        </View>
+          <Button title="Back" onPress={() => this.setState({startLoad: 0})} />
+        </SafeAreaView>
       );
     }
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    height: 500,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  imageContainer: {
-    width: '100%',
-    flex: 1,
-    paddingLeft: 4,
-    paddingTop: 10,
-    textAlign: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  image: {
-    width: 75,
-    height: 75,
-    margin: 1,
-  },
-});

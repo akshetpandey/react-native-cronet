@@ -11,7 +11,7 @@ It offers an easy-to-use, high performance, standards-compliant, and secure way 
 Cronet has support for both Android and iOS.
 
 This module allows you to use the Cronet stack for your react native apps.
-Checkout default react-native vs react-native-cronet comparison on android when loading many images on a high lateceny and packetloss network
+Checkout default react-native vs react-native-cronet comparison on android when loading many images on a high latency and packet loss network
 
 ![Preview](docs/CronetComp.gif)
 
@@ -47,10 +47,10 @@ Make sure to run `pod install` in your iOS folder to get the `Cronet.framework` 
 
 #### iOS
 
-1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
+1. In XCode, in the project navigator, right-click `Libraries` ➜ `Add Files to [your project's name]`
 2. Go to `node_modules` ➜ `react-native-cronet` and add `RNCronet.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libRNCronet.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. Add `pod 'Cronet'` as a dependency in your iOS `Podfile` and run `pod install`, alternatively manaually link [Cronet.framework](https://github.com/akshetpandey/Cronet.framework/releases/latest) to your project
+4. Add `pod 'Cronet'` as a dependency in your iOS `Podfile` and run `pod install`, alternatively manually link [Cronet.framework](https://github.com/akshetpandey/Cronet.framework/releases/latest) to your project
 5. Run your project (`Cmd+R`)<
 
 #### Android
